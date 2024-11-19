@@ -1,0 +1,92 @@
+       /* Style pour les sections */
+       .section {
+        display: none;
+    }
+    .section.active {
+        display: block;
+    }
+    
+    /* Table */
+    table {
+        width: 40%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    
+    /* Statuts */
+    .status-active {
+        color: green;
+        font-weight: bold;
+    }
+    .status-inactive {
+        color: red;
+        font-weight: bold;
+    }
+    
+    /* Boutons */
+    button {
+        padding: 5px 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Style pour les boutons de blocage et de déblocage */
+.btn-block {
+    background-color: red; /* Rouge vif pour "Bloquer" */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.btn-block:hover {
+    background-color: darkred; /* Rouge foncé au survol */
+    opacity: 0.9;
+}
+
+.btn-unblock {
+    background-color: green; /* Vert vif pour "Débloquer" */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+.btn-unblock:hover {
+    background-color: darkgreen; /* Vert foncé au survol */
+    opacity: 0.9;
+}
+
+/* Boutons désactivés */
+button[disabled] {
+    background-color: #ccc; /* Gris clair pour un bouton désactivé */
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Style pour le bouton Supprimer */
+button[type="submit"]:not(.btn-block):not(.btn-unblock) {
+    background-color: #c61515; /* Rouge clair pour "Supprimer" */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+button[type="submit"]:not(.btn-block):not(.btn-unblock):hover {
+    background-color: #cc4444; /* Rouge foncé au survol */
+    opacity: 0.9;
+}
