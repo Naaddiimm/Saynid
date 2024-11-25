@@ -1,4 +1,4 @@
-<?php 
+<?php  
 require_once(__DIR__ . '/../../config/config.php'); 
 require_once(__DIR__ . '/../../controllers/UserController.php');
 
@@ -11,8 +11,9 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$userController = new UserController($db);
+$userController = new UserController();
 $visitors = $userController->getVisitors();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,10 +21,8 @@ $visitors = $userController->getVisitors();
     <title> ADMIN </title>
     <link href="../frontOffice/public/home.css" rel="stylesheet">
     <link href="../frontOffice/public/homeA.css" rel="stylesheet">
-    
-    <style>
-    
-    </style>
+    <script src="../frontOffice/public/homeA.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -44,7 +43,8 @@ $visitors = $userController->getVisitors();
     <main>
         <section id="Cours" class="section active">
             <h2>COURS</h2>
-            <h2>Ajouter un nouveau cours</h2>
+           
+
         </section>
 
         <section id="Stage" class="section">
@@ -57,8 +57,12 @@ $visitors = $userController->getVisitors();
             <div class="TEST-item"></div>
         </section>
 
-        <section id="Dashboard" class="section">
+         <!-- DASHROARD -->
+
+    <section id="Dashboard" class="section">
             <h2>Dashboard</h2>
+
+            <h3>Gestion des utilisateurs</h3>
             <table>
                 <thead>
                     <tr>
@@ -100,21 +104,11 @@ $visitors = $userController->getVisitors();
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+           
         </section>
+
     </main>
-
-    <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.toggle('active', section.id === sectionId);
-            });
-        }
-
-        function confirmDelete() {
-            return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');
-        }
-    </script>
 </body>
-</html>
 
+</html>

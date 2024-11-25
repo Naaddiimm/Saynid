@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 13 nov. 2024 à 16:23
+-- Généré le : sam. 23 nov. 2024 à 19:08
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -32,15 +32,16 @@ CREATE TABLE `admin` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-CREATE TABLE `visitor` (
-  `username` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `active` int(11) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 --
-ALTER TABLE `visitor`
-  ADD PRIMARY KEY (`username`);
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`username`, `password`) VALUES
+('khchini.admin', '$2y$10$ibN1mba1pDPUCeXv0LvOmuuLS18NrsSEkQdzFcEvrpHKCb8GjIv0W');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `blog`
 --
 
@@ -77,6 +78,15 @@ CREATE TABLE `cours` (
   `titre` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `cours`
+--
+
+INSERT INTO `cours` (`id_cours`, `description`, `titre`) VALUES
+(19, 'xxx', 'HTML/PHP'),
+(20, 'xxx', 'C / C++'),
+(22, 'xxx', 'JAVA');
+
 -- --------------------------------------------------------
 
 --
@@ -92,27 +102,29 @@ CREATE TABLE `levels` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `pannier`
---
-
-CREATE TABLE `pannier` (
-  `user` varchar(100) NOT NULL,
-  `id_Cours` int(11) NOT NULL,
-  `id_Test` int(11) NOT NULL,
-  `prix_Totale` decimal(10,2) DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `p_cours`
 --
 
 CREATE TABLE `p_cours` (
   `user` varchar(100) NOT NULL,
   `id_C` int(11) NOT NULL,
-  `status_C` int(11) DEFAULT 0
+  `status_C` int(11) DEFAULT 0,
+  `prix` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `p_cours`
+--
+
+INSERT INTO `p_cours` (`user`, `id_C`, `status_C`, `prix`) VALUES
+('AAA', 20, 1, 200),
+('DRABADOB', 19, 1, 50),
+('DRABADOB', 22, 1, 150),
+('nadim ', 19, 1, 50),
+('nadim ', 20, 1, 200),
+('XXX', 19, 1, 50),
+('XXX', 20, 1, 200),
+('XXX', 22, 1, 150);
 
 -- --------------------------------------------------------
 
@@ -129,40 +141,19 @@ CREATE TABLE `p_test` (
 -- --------------------------------------------------------
 
 --
-
+-- Structure de la table `question`
 --
 
-CREATE TABLE `test` (
-  `id_test` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) NOT NULL,
-  `description` text DEFAULT NULL,
-  PRIMARY KEY (`id_test`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Create the new question table
 CREATE TABLE `question` (
-  `id_question` int(11) NOT NULL AUTO_INCREMENT,
-  `test_id` int(11) NOT NULL, 
+  `id_question` int(11) NOT NULL,
+  `test_id` int(11) NOT NULL,
   `question` text NOT NULL,
   `option_1` text DEFAULT NULL,
   `option_2` text DEFAULT NULL,
   `option_3` text DEFAULT NULL,
   `correct_option` int(11) NOT NULL,
-  `points` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id_question`),
-  FOREIGN KEY (`test_id`) REFERENCES `test`(`id_test`) ON DELETE CASCADE
+  `points` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Create the new test_scores table
-CREATE TABLE `test_scores` (
-  `user` varchar(100) NOT NULL, 
-  `test_id` int(11) NOT NULL, 
-  `score` int(11) NOT NULL,  
-  FOREIGN KEY (`user`) REFERENCES `visitor`(`username`),
-  FOREIGN KEY (`test_id`) REFERENCES `test`(`id_test`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 
 -- --------------------------------------------------------
 
@@ -194,13 +185,46 @@ CREATE TABLE `stage_assignement` (
 --
 -- Structure de la table `test`
 --
+
+CREATE TABLE `test` (
+  `id_test` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `test_scores`
+--
+
+CREATE TABLE `test_scores` (
+  `user` varchar(100) NOT NULL,
+  `test_id` int(11) NOT NULL,
+  `score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `visitor`
 --
 
+CREATE TABLE `visitor` (
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `active` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `visitor`
+--
+
+INSERT INTO `visitor` (`username`, `password`, `active`) VALUES
+('AAA', '$2y$10$oMDls9gsHs/cVdArmyDVEuloETmPZuwmlYycTmArhfJtL2Mnj2vAe', 1),
+('DRABADOB', '$2y$10$8Pf0R055PoNdZCVyNX7MvOAs/3Rr8SrKFF2qPq0s0v87iuqHULp1O', 1),
+('nadim ', '$2y$10$Gmh7b6yUsS7WUGNitTVLT.ii39Wp5I0Ctjo.K38/gjIYxmdX8E7ni', 1),
+('XXX', '$2y$10$BtP/5z4pzZFma0QDBxItmO0oceG4pfPR30hluBCyLm1kqceZk/gxC', 1);
 
 --
 -- Index pour les tables déchargées
@@ -238,14 +262,6 @@ ALTER TABLE `levels`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `pannier`
---
-ALTER TABLE `pannier`
-  ADD PRIMARY KEY (`user`,`id_Cours`,`id_Test`),
-  ADD KEY `id_Cours` (`id_Cours`),
-  ADD KEY `id_Test` (`id_Test`);
-
---
 -- Index pour la table `p_cours`
 --
 ALTER TABLE `p_cours`
@@ -262,7 +278,9 @@ ALTER TABLE `p_test`
 --
 -- Index pour la table `question`
 --
-
+ALTER TABLE `question`
+  ADD PRIMARY KEY (`id_question`),
+  ADD KEY `test_id` (`test_id`);
 
 --
 -- Index pour la table `stage`
@@ -278,12 +296,22 @@ ALTER TABLE `stage_assignement`
 
 --
 -- Index pour la table `test`
+--
+ALTER TABLE `test`
+  ADD PRIMARY KEY (`id_test`);
 
+--
+-- Index pour la table `test_scores`
+--
+ALTER TABLE `test_scores`
+  ADD KEY `user` (`user`),
+  ADD KEY `test_id` (`test_id`);
 
 --
 -- Index pour la table `visitor`
 --
-
+ALTER TABLE `visitor`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -305,7 +333,7 @@ ALTER TABLE `commentaire`
 -- AUTO_INCREMENT pour la table `cours`
 --
 ALTER TABLE `cours`
-  MODIFY `id_cours` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cours` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `levels`
@@ -348,14 +376,6 @@ ALTER TABLE `commentaire`
   ADD CONSTRAINT `commentaire_ibfk_1` FOREIGN KEY (`user`) REFERENCES `visitor` (`username`);
 
 --
--- Contraintes pour la table `pannier`
---
-ALTER TABLE `pannier`
-  ADD CONSTRAINT `pannier_ibfk_1` FOREIGN KEY (`user`) REFERENCES `visitor` (`username`),
-  ADD CONSTRAINT `pannier_ibfk_2` FOREIGN KEY (`id_Cours`) REFERENCES `cours` (`id_cours`),
-  ADD CONSTRAINT `pannier_ibfk_3` FOREIGN KEY (`id_Test`) REFERENCES `test` (`id_test`);
-
---
 -- Contraintes pour la table `p_cours`
 --
 ALTER TABLE `p_cours`
@@ -368,6 +388,19 @@ ALTER TABLE `p_cours`
 ALTER TABLE `p_test`
   ADD CONSTRAINT `p_test_ibfk_1` FOREIGN KEY (`user`) REFERENCES `visitor` (`username`),
   ADD CONSTRAINT `p_test_ibfk_2` FOREIGN KEY (`id_T`) REFERENCES `test` (`id_test`);
+
+--
+-- Contraintes pour la table `question`
+--
+ALTER TABLE `question`
+  ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `test` (`id_test`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `test_scores`
+--
+ALTER TABLE `test_scores`
+  ADD CONSTRAINT `test_scores_ibfk_1` FOREIGN KEY (`user`) REFERENCES `visitor` (`username`),
+  ADD CONSTRAINT `test_scores_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `test` (`id_test`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

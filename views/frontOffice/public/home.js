@@ -1,93 +1,69 @@
-// Initialisation des variables nadim  
-let cart = [];
-let totalPrice = 0;
 
 // Afficher la section active
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => section.classList.remove('active'));
+    
     const activeSection = document.getElementById(sectionId);
-    if (activeSection) activeSection.classList.add('active');
-}
-
-// Ajouter un cours au panier
-function addToCart(courseId, courseName, coursePrice) {
-    const courseExists = cart.some(item => item.id === courseId);
-    if (courseExists) {
-        alert("Ce cours est déjà dans le panier.");
-        return;
+    if (activeSection) {
+        activeSection.classList.add('active');
     }
 
-    cart.push({ id: courseId, name: courseName, price: coursePrice });
-    totalPrice += coursePrice;
-    updateCartDetails();
-    document.getElementById('cart-details').style.display = 'block';
+    // Défilement vers la section
+    activeSection.scrollIntoView({ behavior: "smooth" });
 }
 
-// Mettre à jour les détails du panier
-function updateCartDetails() {
-    const cartItemsContainer = document.getElementById('cart-items');
-    cartItemsContainer.innerHTML = '';
-
-    cart.forEach((item) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${item.name} : €${item.price}`;
-        cartItemsContainer.appendChild(listItem);
-    });
-
-    document.getElementById('total-price').textContent = `Prix Total: €${totalPrice}`;
-}
-
-// Soumettre le formulaire d'achat
-function submitCartForm() {
-    const courseTitleInput = document.getElementById('courseTitle');
-    const courseIdInput = document.getElementById('courseId');
-
-    if (cart.length === 0) {
-        alert("Votre panier est vide.");
-        return;
-    }
-
-    const cardNumber = document.getElementById('card-number').value;
-    if (cardNumber === '') {
-        alert("Veuillez entrer votre numéro de carte.");
-        return;
-    }
-
-    cart.forEach((item) => {
-        courseTitleInput.value = item.name;
-        courseIdInput.value = item.id; // Remplir l'ID du cours dans le formulaire
-        document.getElementById('purchaseForm').submit();
-    });
-
-    alert("Tous les achats ont été enregistrés.");
-    clearCart();
-}
-
-// Supprimer les cours sélectionnés du panier
-function removeSelectedCourses() {
-    const checkboxes = document.querySelectorAll('.course-checkbox');
-    checkboxes.forEach((checkbox, index) => {
-        if (checkbox.checked) {
-            totalPrice -= cart[index].price;
-            cart.splice(index, 1);
-        }
-    });
-
-    updateCartDetails();
-    if (cart.length === 0) document.getElementById('cart-details').style.display = 'none';
-}
-
-// Vider le panier
-function clearCart() {
-    cart = [];
-    totalPrice = 0;
-    document.getElementById('card-number').value = '';
-    updateCartDetails();
-    document.getElementById('cart-details').style.display = 'none';
-}
-
-// Afficher la section des cours par défaut lors du chargement de la page
+// Vérifier si l'ancre est présente et afficher la section correspondante
 document.addEventListener("DOMContentLoaded", () => {
-    showSection('cours');
+    const hash = window.location.hash; // Récupérer l'ancre dans l'URL
+
+    if (hash === "#Profile") {
+        showSection('Profile');  // Afficher la section "Profile" si l'ancre est présente
+    } else {
+        showSection('cours');  // Sinon, afficher la section des cours par défaut
+    }
 });
+
+ // Optionnel: scroll vers la section Profile si la page se recharge
+ if (window.location.hash === "#Profile") {
+    document.getElementById("Profile").scrollIntoView({ behavior: "smooth" });
+}
+
+document.querySelector('form').addEventListener('submit', function (event) {
+    let hasError = false;
+
+    // Effacer les messages d'erreur précédents
+    document.querySelectorAll('.error-message').forEach(function (el) {
+        el.textContent = '';
+    });
+
+    // Validation des champs
+    const oldPassword = document.getElementById('oldPassword');
+    const newPassword = document.getElementById('newPassword');
+    const confirmNewPassword = document.getElementById('confirmNewPassword');
+    
+    if (oldPassword.value.trim() === '') {
+        document.getElementById('oldPasswordError').textContent = 'Ancien mot de passe requis';
+        hasError = true;
+    }
+
+    if (newPassword.value.trim() === '') {
+        document.getElementById('newPasswordError').textContent = 'Nouveau mot de passe requis';
+        hasError = true;
+    }
+
+    if (confirmNewPassword.value.trim() === '') {
+        document.getElementById('confirmNewPasswordError').textContent = 'Confirmer le mot de passe requis';
+        hasError = true;
+    }
+
+    if (newPassword.value !== confirmNewPassword.value) {
+        document.getElementById('confirmNewPasswordError').textContent = 'Les mots de passe ne correspondent pas';
+        hasError = true;
+    }
+
+    if (hasError) {
+        event.preventDefault(); // Empêcher l'envoi du formulaire en cas d'erreur
+    }
+});
+
