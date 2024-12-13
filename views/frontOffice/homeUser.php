@@ -4,6 +4,11 @@ if (!isset($_SESSION['username'])) {
     header("Location: index.php");
     exit();
 }
+include '../../controllers/PostC.php';
+include '../../controllers/CommentC.php';
+$PostC=new PostC();
+$liste=$PostC->listPosts();
+$commentC=new CommentC();
 ?>
 
 <!DOCTYPE html>
@@ -11,102 +16,228 @@ if (!isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WELCOME</title>
+    <title>Saynid</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/dashboard.css">
+    <style>
+        /* Posts Section */
+.tour-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    gap: 20px; /* Espacement entre les boîtes */
+    margin-top: 20px;
+}
 
-    <link href="../frontOffice/public/home.css" rel="stylesheet">
-    <script src="../frontOffice/public/home.js"></script>
+.box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 10px;
+}
+
+.box h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Top Posts Section */
+.top-posts .tour-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Search Bar */
+.searchbar {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #004085;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.searchbar:focus {
+    border-color: #0062cc;
+    outline: none;
+}
+
+/* Adjustments for Section Headers */
+.center-text h2 {
+    font-size: 1.8rem;
+    color: #004085;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* Button Styling */
+button {
+    background-color: #004085;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #0062cc;
+    transform: translateY(-2px);
+}
+
+/* Global Adjustments for Responsiveness */
+@media (max-width: 768px) {
+    .tour-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .searchbar {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .tour-content {
+        grid-template-columns: 1fr;
+    }
+
+    .searchbar {
+        width: 100%;
+    }
+}
+
+    </style>
 </head>
-<body>
-
-    <header>
-        <h1>Welcome <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+<body> 
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="assets/img/saynid.png" alt="Logo">
+            <span class="welcome-text">Bienvenue</span> 
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#profile" onclick="showSection('profile')" class="active"><i class="fas fa-user-circle"></i> Profil</a></li>
+                <li><a href="#cours" onclick="showSection('cours')"><i class="fas fa-book"></i> Cours</a></li>
+                <li><a href="#panier" onclick="showSection('panier')"><i class="fas fa-shopping-cart"></i> Panier</a></li>
+                <li><a href="#blog" onclick="showSection('blog')"><i class="fas fa-pen"></i> Blog</a></li>
+                <li><a href="#test" onclick="showSection('test')"><i class="fas fa-tasks"></i> Test</a></li>
+                <li><a href="#stage" onclick="showSection('stage')"><i class="fas fa-briefcase"></i> Stage</a></li>
+            </ul>
+        </nav>
+        <button class="logout-btn">Se déconnecter</button>
+        
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#cours" onclick="showSection('cours')">Cours</a></li>
-            <li><a href="#test" onclick="showSection('test')">Test</a></li>
-            <li><a href="#payement" onclick="showSection('payement')">Payement</a></li>
-            <li><a href="#progress" onclick="showSection('progress')">Progress</a></li>
-            <li><a href="#stage" onclick="showSection('stage')">Stage</a></li>
-            <li><a href="../frontOffice/Blog.php">HOME</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <!-- Section Cours -->
-        <section id="cours" class="section active">
-            <h2>COURS</h2>
-            <div class="cours-item">
-                <h3>MATH</h3>
-                <p>Cours math</p>
-            </div>
-            <div class="cours-item">
-                <h3>JAVA</h3>
-                <p>Cours java</p>
-            </div>
-            <div class="cours-item">
-                <h3>C / C++</h3>
-                <p>Cours C / C++</p>
-            </div>
+    <!-- Main Content -->
+    <main class="content">
+        <section id="profile-content" class="section-content active">
+            <h2>Profil</h2>
+            <p>Bienvenue dans votre espace personnel.</p>
         </section>
-
-        <!-- Section Test -->
-        <section id="test" class="section">
-            <h2>TEST</h2>
-            <div class="test-item">
-                <h3>TEST MATH</h3>
-                <p>Contenu du test de Mathématiques.</p>
-            </div>
-            <div class="test-item">
-                <h3>TEST JAVA</h3>
-                <p>Contenu du test de Java.</p>
-            </div>
+        <section id="cours-content" class="section-content">
+            <h2>Cours</h2>
+            <p>Accédez à une bibliothèque de cours enrichissante.</p>
         </section>
-
-        <!-- Section Payement -->
-        <section id="payement" class="section">
-            <h2>Payement</h2>
-            <div class="courses-container">
-                <div class="course-card">
-                    <h3>JAVA</h3>
-                    <img src="../frontOffice/public/JAVA.png" alt="Image du cours JAVA">
-                    <div class="price">€100</div>
-                    <button onclick="addToCart('JAVA', 100)">Acheter</button>
-                </div>
-                <div class="course-card">
-                    <h3>HTML/PHP</h3>
-                    <img src="../frontOffice/public/HTML.png" alt="Image du cours HTML/PHP">
-                    <div class="price">€100</div>
-                    <button onclick="addToCart('HTML/PHP', 100)">Acheter</button>
-                </div>
-                <div class="course-card">
-                    <h3>C / C++</h3>
-                    <img src="../frontOffice/public/C.png" alt="Image du cours C / C++">
-                    <div class="price">€100</div>
-                    <button onclick="addToCart('C / C++', 100)">Acheter</button>
-                </div>
+        <section id="panier-content" class="section-content">
+            <h2>Panier</h2>
+            <p>Consultez les articles que vous avez ajoutés.</p>
+        </section>
+        <section id="blog-content" class="section-content">
+            <h2>Blog</h2>
+            <p>Découvrez les dernières nouvelles et articles.</p>
+            <section class="tour" id="posts-section">
+    <div class="center-text">
+      <h2>Posts</h2>
+      <input type="text" id="searchInput" class="searchbar" placeholder="Rechercher par titre...">
+    </div>
+    <div id="normalPosts" class="tour-content">
+    <?php foreach($liste as $post): ?>
+    <div class="box" id="box-posts">
+        <a href="post_details.php?id=<?= $post['ID_post']; ?>">
+            <img src="../Images/<?= $post['Image']; ?>">
+            <h4><?= $post['Titre']; ?></h4>
+        </a>
+        <p>Likes : <?= $post['Likes']; ?> Dislikes : <?= $post['Dislikes']; ?></p>
+        <p>Commentaires: <?= $post['Commentaires']; ?></p>
+        <p><?= $post['Auteur']; ?> <?= $post['Date_Publication']; ?></p>
+    </div>
+<?php endforeach; ?>
+  </section>
+  <section class="top-posts">
+    <div class="center-text">
+        <h2>Top 3 des Meilleurs Posts</h2>
+    </div>
+    <div class="tour-content">
+        <?php $topPosts = $PostC->getTopPosts(); ?>
+        <?php foreach($topPosts as $post): ?>
+            <div class="box" id="box-top-posts">
+                <a href="post_details.php?id=<?= $post['ID_post']; ?>">
+                    <img src="../Images/<?= $post['Image']; ?>">
+                    <h4><?= $post['Titre']; ?></h4>
+                </a>
+                <p>Likes : <?= $post['Likes']; ?> Dislikes : <?= $post['Dislikes']; ?></p>
+                <p>Commentaires: <?= $post['Commentaires']; ?></p>
+                <p><?= $post['Auteur']; ?> <?= $post['Date_Publication']; ?></p>
             </div>
-            <div id="cart-details" style="display: none;">
-                <h3>Panier</h3>
-                <ul id="cart-items"></ul>
-                <p id="total-price">Prix Total: €0</p>
-                <input type="text" id="card-number" placeholder="Votre Numéro de carte">
-                <button class="validate-btn" onclick="validateCart()">Valider l'Achat</button>
-                <button class="remove-btn" onclick="removeSelectedCourses()">Retirer Cours</button>
-                <button class="clear-btn" onclick="clearCart()">Vider le Panier</button>
-            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+        <section id="test-content" class="section-content">
+            <h2>Test</h2>
+            <p>Passez des évaluations et des tests.</p>
         </section>
-
-        <!-- Autres sections -->
-        <section id="progress" class="section">
-            <h2>PROGRESS</h2>
+        <section id="stage-content" class="section-content">
+            <h2>Stage</h2>
+            <p>Trouvez des opportunités pour lancer votre carrière.</p>
         </section>
-
-        <section id="stage" class="section">
-            <h2>STAGE</h2>
-        </section>
-
     </main>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section-content');
+            const links = document.querySelectorAll('.nav-links a');
+            sections.forEach(section => section.classList.remove('active'));
+            links.forEach(link => link.classList.remove('active'));
+            document.getElementById(sectionId + '-content').classList.add('active');
+            document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+        }
+        document.addEventListener('DOMContentLoaded', () => showSection('profile'));
+    </script>
 </body>
 </html>
+

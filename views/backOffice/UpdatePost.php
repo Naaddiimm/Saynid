@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postC->UpdatePost($updatedPost, $id);
     
     // Rediriger vers une autre page après la mise à jour, par exemple la page de détails du post
-    header("Location: ListePosts.php?ID_post=$id");
+    header("Location: homeAdmin.php?ID_post=$id");
     exit();
 }
 

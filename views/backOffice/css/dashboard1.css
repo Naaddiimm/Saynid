@@ -1,0 +1,131 @@
+/* Styles généraux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background-color: #eaf6ff; /* Bleu très clair pour le fond principal */
+    color: #2c3e50; /* Bleu-gris */
+}
+
+/* Barre latérale */
+.sidebar {
+    width: 260px;
+    background-color: #122d49; /* Bleu profond */
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    position: fixed;
+    height: 100%;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.sidebar .logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid #ffffff;
+}
+
+.menu ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.menu ul li {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.menu ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu ul li a:hover {
+    background-color: #007acc; /* Bleu vif pour le survol */
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+/* Contenu principal */
+.main-content {
+    margin-left: 260px;
+    padding: 25px;
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    background-color: #1279f1; /* Nouveau bleu */
+    text-align: center; /* Centrer le texte */
+    padding: 2rem 0 0 0; /* Espacement en haut de 2 rem, zéro pour les autres côtés */
+    border: 10px solid #28c2f7; /* Bordure bleue plus claire */
+    border-radius: 8px; /* Bords arrondis */
+    position: relative; /* Pour permettre le positionnement du bouton */
+}
+
+.logout-btn {
+    background-color: #004a8d; /* Bleu profond */
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: transform 0.4s, background-color 0.4s;
+    position: absolute; /* Bouton positionné par rapport à .user-info */
+    top: 50%; /* Alignement vertical */
+    right: 20px; /* Distance par rapport au bord droit */
+    transform: translateY(-50%); /* Centrer verticalement */
+}
+
+.logout-btn:hover {
+    background-color: #005fa3; /* Bleu intermédiaire */
+    transform: scale(1.05);
+}
+
+/* Sections */
+.section-content {
+    display: none;
+    background: #f1f9ff; /* Bleu très pâle pour les sections */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.section-content h2 {
+    margin-bottom: 15px;
+    color: #004a8d; /* Bleu profond */
+    font-size: 24px;
+}
+
+.section-content p {
+    line-height: 1.8;
+    color: #2c3e50;
+}

@@ -36,6 +36,128 @@ $commentC=new CommentC();
     <link href="../frontOffice/assets/css/style.css" rel="stylesheet" />    
   <!-- Google	Fonts -->
 	<link href='views/http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
+    <style>
+        /* Posts Section */
+.tour-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+    gap: 20px; /* Espacement entre les boîtes */
+    margin-top: 20px;
+}
+
+.box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 10px;
+}
+
+.box h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.box p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Top Posts Section */
+.top-posts .tour-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Search Bar */
+.searchbar {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #004085;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.searchbar:focus {
+    border-color: #0062cc;
+    outline: none;
+}
+
+/* Adjustments for Section Headers */
+.center-text h2 {
+    font-size: 1.8rem;
+    color: #004085;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* Button Styling */
+button {
+    background-color: #004085;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #0062cc;
+    transform: translateY(-2px);
+}
+
+/* Global Adjustments for Responsiveness */
+@media (max-width: 768px) {
+    .tour-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .searchbar {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .tour-content {
+        grid-template-columns: 1fr;
+    }
+
+    .searchbar {
+        width: 100%;
+    }
+}
+
+    </style>
 </head>
 <body >
    

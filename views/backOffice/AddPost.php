@@ -1,5 +1,111 @@
 <html>
-    <head><link rel="stylesheet" href="../CSS/StyleAdd.css"/></head>
+    <head>
+    <style>/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the form */
+form {
+    width: 70%;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-spacing: 15px;
+}
+
+td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+label {
+    font-size: 16px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Submit and Reset buttons */
+input[type="submit"],
+input[type="reset"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #0056b3;
+}
+
+/* Alerts and Error messages */
+.alert {
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    margin-top: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Reset button styling */
+input[type="reset"] {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+input[type="reset"]:hover {
+    background-color: #ddd;
+}
+
+/* Heading styles */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+</style>    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="../CSS/StyleAdd.css"/></head>
     <script>
 function validerForm() {
     var titre = document.getElementById("Titre").value;
@@ -98,6 +204,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Erreur lors du téléchargement du fichier.";
     }
-    header('location:ListePosts.php');
+    header('location:homeAdmin.php');
 }
 ?>  
